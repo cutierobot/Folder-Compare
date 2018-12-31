@@ -76,8 +76,8 @@ class Compare(object):
 
 
 	# //TODO: [write] function definition (99)
-	@staticmethod
-	def recus_details(dc,folder1,folder2):
+	# @staticmethod
+	def recus_details(self,dc,folder1,folder2):
 		# left = '\n'.join(dc.left_only)
 		# right = '\n'.join(dc.right_only)
 		# com = '\n'.join(dc.common)
@@ -104,10 +104,11 @@ class Compare(object):
 	prints out subfolders info.
 	@see recus_details
 	"""
-	@staticmethod
-	def recursive_dir(dc,folder1,folder2):
+	# @staticmethod
+	def recursive_dir(self,dc,folder1,folder2):
 		if len(dc.common_dirs)>0:
 			for folder in dc.common_dirs:
+				
 				# print folder name in yellow
 				pole = "|"+ format(folder,"^25s")+"|"
 				print("\033[1;33;40m"+"+"+format("--","-^25s")+"+"+"\033[0;37;40m")
@@ -117,21 +118,51 @@ class Compare(object):
 				left = folder1+"/"+folder
 				right = folder2+"/"+folder 
 				newdc = filecmp.dircmp(left, right)
-				Compare.recus_details(newdc,left,right)
+				# Compare.recus_details(newdc,left,right)
+				self.recus_details(newdc,left,right)
 				
-				# deals with the subfolders in the current folder. i.e Season 1
-				if len(newdc.common_dirs)>0:
-					for subfolder in newdc.common_dirs:
-						# print("\nsubfolder: "+subfolder)
-						# print("======================\n")
-						print("\n\033[1;33;40m"+subfolder+"\033[0;37;40m")
-						subleft = left+"/"+subfolder
-						subright = right+"/"+subfolder 
-						subdc = filecmp.dircmp(subleft, subright)
-						Compare.recus_details(subdc,subleft,subright)
-					print("#######################\n")
-				Compare.give_best_score(len(dc.common),newdc)
-				print("======================\n")
+				# # deals with the subfolders in the current folder. i.e Season 1
+				# if len(newdc.common_dirs)>0:
+				# 	for subfolder in newdc.common_dirs:
+				# 		# print("\nsubfolder: "+subfolder)
+				# 		# print("======================\n")
+				# 		print("\n\033[1;33;40m"+subfolder+"\033[0;37;40m")
+				# 		subleft = left+"/"+subfolder
+				# 		subright = right+"/"+subfolder 
+				# 		subdc = filecmp.dircmp(subleft, subright)
+				# 		# Compare.recus_details(subdc,subleft,subright)
+				# 		self.recus_details(subdc,subleft,subright)
+				# 	print("#######################\n")
+				# # Compare.give_best_score(len(dc.common),newdc)
+				# self.give_best_score(len(dc.common),newdc)
+				# print("======================\n")
+
+				# self.subfolder_rec(newdc, left, right, dc)
+
+	"""
+	Takes in the dc and newdc, which is for the subfolders of the dc, and 
+	prints out the subfolder infomation for that dc folder.
+	@param newdc The newdc for the subfolder
+	@param dc teh dc for the parent directory
+	@param left The left directory subfolder creation
+	@param right The right directory subfolder creation
+	"""
+	def subfolder_rec(self, newdc, left, right, dc):
+	# deals with the subfolders in the current folder. i.e Season 1
+		if len(newdc.common_dirs)>0:
+			for subfolder in newdc.common_dirs:
+				# print("\nsubfolder: "+subfolder)
+				# print("======================\n")
+				print("\n\033[1;33;40m"+subfolder+"\033[0;37;40m")
+				subleft = left+"/"+subfolder
+				subright = right+"/"+subfolder 
+				subdc = filecmp.dircmp(subleft, subright)
+				# Compare.recus_details(subdc,subleft,subright)
+				self.recus_details(subdc,subleft,subright)
+			print("#######################\n")
+		# Compare.give_best_score(len(dc.common),newdc)
+		self.give_best_score(len(dc.common),newdc)
+		print("======================\n")
 
 	"""
 	The initial prompt that appears after successful initialisation of program.
@@ -188,13 +219,16 @@ class Compare(object):
 		# right = '\n'.join(dc.right_only)
 		# com = '\n'.join(dc.common_dirs)
 
+		# coloured words
 		leftOnly = "\033[1;35;40m" +"left_only\033[0;37;40m"
 		rightOnly = "\033[1;34;40m"+"Right Only\033[0;37;40m"
 		commonDirs = "\033[1;32;40m"+"Common Directories/files\033[0;37;40m"
 		# leftTitle = format(leftOnly,":^10")
+		# ------ borders
 		leftPole = "-"*23
 		middlePole = "-"*24
 		rightPole = "-"*28
+		
 		print("+"+"-"*23+"+"+"-"*24+"+"+"-"*28+"+")
 		print("|       "+leftOnly+"       |       "+rightOnly+"       |  "+commonDirs+"  |")
 		print("+"+"-"*23+"+"+"-"*24+"+"+"-"*28+"+")
@@ -206,42 +240,42 @@ class Compare(object):
 		sizes.append(len(dc.right_only))
 		sizes.append(len(dc.common))
 
-		# print("one", end='')
-		# print("two", end='')
-		# print("three", end='')
 		for x in range(0,max(sizes)):
-			# print("|"+" "*23 + "|"+" "*24 + "|"+" "*28+"|")
-			# print(str(len(dc.left_only[0])) + " - 23 = " + str(lft))
-			
 			# 1st column
-			print("|", end="")
+			print("|", end="",flush=True)
+			# print("x = " + str(x) + " sizes[0] = " + str(sizes[0]))
 			if x < sizes[0]:
+				dcl = dc.left_only[x]
 				lft = 23 - len(dc.left_only[x])
-				# print('{:.23}'.format() dc.left_only[x] + " "*lft, end='')
-				print('{:.23}'.format(dc.left_only[x]) + " "*lft, end='')
+				# Compare.print_red("dcl = " + dc.left_only[x])
+				print('{0:.23}'.format(dcl) + " "*lft, end="")
+				# Compare.print_red("dcl = " + dc.left_only[x])
+				# print()
 			else:
-				print(" "*23, end="")
-			print("|", end="")
+				print(" "*23, end="",flush=True)
+			print("|", end="",flush=True)
 
 			# 2nd column
 			if x < sizes[1]:
 				rght = 24 - len(dc.right_only[x])
-				# print(dc.right_only[x] + " "*rght, end="")
-				print('{:.24}'.format(dc.right_only[x]) + " "*rght, end="")
+				print('{0:.24}'.format(dc.right_only[x]) + " "*rght, end="")
 			else:
 				print(" "*24, end="")
-			print("|", end="")
+			print("|", end="",flush=True)
 
 			# 3rd column
 			if x < sizes[2]:
 				comp = 28 - len(dc.common[x])
-				# print(dc.common[x] + " "*comp+"|")
-				print('{:.28}'.format(dc.common[x]) + " "*comp, end="")
+				print('{0:.28}'.format(dc.common[x]) + " "*comp, end="")
 			else:
-				print(" "*28, end="")
+				print(" "*28, end="",flush=True)
 			print("|")
+
 		print("+"+"-"*23+"+"+"-"*24+"+"+"-"*28+"+")
 			
+		Compare.print_red("left_only = "+str(len(dc.left_only)))
+		Compare.print_red("right_only: "+str(len(dc.right_only)))
+		Compare.print_red("common: "+str(len(dc.common)))
 		# get size of all coloums and use the larget number for "for loop"
 		# bigest = max(sizes)
 		# print_red(str(sizes))
@@ -257,6 +291,7 @@ class Compare(object):
 	@see filecmp#dircmp
 		{https://docs.python.org/3/library/filecmp.html#filecmp.dircmp}
 	"""
+	@staticmethod
 	def give_best_score(commonNumber,subdc):
 		# tv show folder common directs/folders number
 		# sub
