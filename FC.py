@@ -51,8 +51,6 @@ class Compare(object):
 	"""
 	Prints the left directory only. Where only file/folders that appear in the
 	left compared directory appear.
-	@param parameter description
-	@return [retType]	description
 	"""
 	def left_directory_only(self):
 		left = '\n'.join(self.dc.left_only)
@@ -70,8 +68,6 @@ class Compare(object):
 
 	"""
 	Prints the comparison between directory 1 and 2 together.
-	@param parameter description
-	@return [retType]	description
 	"""
 	def compared_only(self):
 		com = '\n'.join(self.dc.common_dirs)
@@ -82,24 +78,26 @@ class Compare(object):
 	# //TODO: [write] function definition (99)
 	@staticmethod
 	def recus_details(dc,folder1,folder2):
-		left = '\n'.join(dc.left_only)
-		right = '\n'.join(dc.right_only)
-		com = '\n'.join(dc.common)
+		# left = '\n'.join(dc.left_only)
+		# right = '\n'.join(dc.right_only)
+		# com = '\n'.join(dc.common)
 
-		leftOnly = "\033[1;35;40m" +format("left_only: ","^25s")+"\033[0;37;40m"
-		rightOnly = "\033[1;34;40m"+format("Right Only: ","^25s")+"\033[0;37;40m"
-		Common = "\033[1;32;40m"+format("Common Directories/files","^25s")+"\033[0;37;40m"
-		yellow_pole = "\033[1;33;40m"+"|"+"\033[0;37;40m"
+		# leftOnly = "\033[1;35;40m" +format("left_only: ","^25s")+"\033[0;37;40m"
+		# rightOnly = "\033[1;34;40m"+format("Right Only: ","^25s")+"\033[0;37;40m"
+		# Common = "\033[1;32;40m"+format("Common Directories/files","^25s")+"\033[0;37;40m"
+		# yellow_pole = "\033[1;33;40m"+"|"+"\033[0;37;40m"
 
-		# Left Only
-		print(yellow_pole+leftOnly+yellow_pole)
-		print(left)
-		# right Only
-		print(yellow_pole+rightOnly+yellow_pole)
-		print(right)
-		# common directories print
-		print(yellow_pole+Common+yellow_pole)
-		print(com)
+		# # Left Only
+		# print(yellow_pole+leftOnly+yellow_pole)
+		# print(left)
+		# # right Only
+		# print(yellow_pole+rightOnly+yellow_pole)
+		# print(right)
+		# # common directories print
+		# print(yellow_pole+Common+yellow_pole)
+		# print(com)
+		self.table_print(dc)
+
 
 	"""
 	Recursive of sorts, finds subfolders and go through them and 
@@ -111,10 +109,7 @@ class Compare(object):
 		if len(dc.common_dirs)>0:
 			for folder in dc.common_dirs:
 				# print folder name in yellow
-				# print("\033[1;33;40m"+folder+"\033[0;37;40m")
-				# pole = "|"+ format(folder,"^25s")+"|"
 				pole = "|"+ format(folder,"^25s")+"|"
-				# print("\033[1;33;40m"+folder+"\033[0;37;40m")
 				print("\033[1;33;40m"+"+"+format("--","-^25s")+"+"+"\033[0;37;40m")
 				print("\033[1;33;40m"+pole+"\033[0;37;40m")
 				print("\033[1;33;40m"+"+"+format("--","-^25s")+"+"+"\033[0;37;40m")
@@ -124,6 +119,7 @@ class Compare(object):
 				newdc = filecmp.dircmp(left, right)
 				Compare.recus_details(newdc,left,right)
 				
+				# deals with the subfolders in the current folder. i.e Season 1
 				if len(newdc.common_dirs)>0:
 					for subfolder in newdc.common_dirs:
 						# print("\nsubfolder: "+subfolder)
@@ -137,7 +133,11 @@ class Compare(object):
 				Compare.give_best_score(len(dc.common),newdc)
 				print("======================\n")
 
-	# //TODO: [write] function definition (99)
+	"""
+	The initial prompt that appears after successful initialisation of program.
+	It launches all the sub_programs of this program. If anything but 0-4, or h
+	is entered then there is a reprompt.
+	"""
 	def init_prompt(self):
 		# name of python program
 		# options
@@ -152,6 +152,7 @@ class Compare(object):
 		print("[3] Table Comparison")
 		print("[4] Recursive Comparison")
 		print("[h] Reprint these help messages")
+		print("[exit] Exit this program")
 		
 		usrInput = input("Type number from 0 - 3: ")
 		if usrInput == "0":
@@ -164,6 +165,12 @@ class Compare(object):
 			self.table_print(self.dc)
 		elif usrInput == "4":
 			self.recursive_dir(self.dc,self.folder1,self.folder2)
+		elif usrInput == "h"
+			self.init_prompt()
+		elif usrInput == "exit"
+			exInput = input("Are you sure you want to exit [Y|N]: ")
+			if exInput == "Y":
+				sys.exit(2)
 		else:
 			self.print_red("error please input a number between 0 - 3")
 
@@ -239,10 +246,16 @@ class Compare(object):
 		# bigest = max(sizes)
 		# print_red(str(sizes))
 
-
 	"""
 	Give best average to help with calulating what version to delete
-	of what location
+	of what location. takes both directories with same folder name and 
+	determines which folder has more items and such to help establish what 
+	folder version to keep and delete.
+	@param commonNumber The number of files/folders that both directories have 
+		in common.
+	@param subdc The dc value from filecmp
+	@see filecmp#dircmp
+		{https://docs.python.org/3/library/filecmp.html#filecmp.dircmp}
 	"""
 	def give_best_score(commonNumber,subdc):
 		# tv show folder common directs/folders number
@@ -287,6 +300,10 @@ def check_argv():
 
 
 # //TODO: create testing functions and stuff
+"""
+Main funtion
+@param argv Arguments from commandline
+"""
 def main(argv):
 	# print(sys.argv[1])
 	# folder1="/Volumes/Mikaela\'s Hardrive/TV SHOWS"
