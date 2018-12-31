@@ -165,9 +165,9 @@ class Compare(object):
 			self.table_print(self.dc)
 		elif usrInput == "4":
 			self.recursive_dir(self.dc,self.folder1,self.folder2)
-		elif usrInput == "h"
+		elif usrInput == "h":
 			self.init_prompt()
-		elif usrInput == "exit"
+		elif usrInput == "exit":
 			exInput = input("Are you sure you want to exit [Y|N]: ")
 			if exInput == "Y":
 				sys.exit(2)
