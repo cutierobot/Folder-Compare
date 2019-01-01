@@ -243,15 +243,12 @@ class Compare(object):
 		for x in range(0,max(sizes)):
 			# 1st column
 			temp = "|"
-			# print("|", end="",flush=True)
-			# Compare.print_red("x="+str(x))
 			if x < sizes[0]:
 				dcl = str(dc.left_only[x])
 				# lft = 23 - len(dc.left_only[x])
 				temp += dcl[0:23].ljust(23, ' ')
 				temp = temp.splitlines()
 				temp = "?".join(temp)
-				# print(dcl[0:23].ljust(23, ' '), end="")
 				# print('{0:.23}'.format(dcl) + " "*lft, end="")
 			else:
 				temp += " "*23
@@ -287,7 +284,6 @@ class Compare(object):
 				temp += temp_comm[0:28].ljust(28, ' ')
 				temp = temp.splitlines()
 				temp = "?".join(temp)
-				# Compare.print_red("common temp = "+repr(temp))
 				# print('{0:.28}'.format(dc.common[x]) + " "*comp, end="")
 			else:
 				temp += " "*28
@@ -303,7 +299,6 @@ class Compare(object):
 		Compare.print_red("common: "+str(len(dc.common)))
 		# get size of all coloums and use the larget number for "for loop"
 		# bigest = max(sizes)
-		# print_red(str(sizes))
 
 	"""
 	Give best average to help with calulating what version to delete
