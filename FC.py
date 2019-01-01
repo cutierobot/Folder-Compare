@@ -242,35 +242,63 @@ class Compare(object):
 
 		for x in range(0,max(sizes)):
 			# 1st column
-			print("|", end="",flush=True)
-			# print("x = " + str(x) + " sizes[0] = " + str(sizes[0]))
+			temp = "#"
+			# print("|", end="",flush=True)
+			Compare.print_red("x="+str(x))
 			if x < sizes[0]:
-				dcl = dc.left_only[x]
-				lft = 23 - len(dc.left_only[x])
+				dcl = str(dc.left_only[x])
+				# print(dcl,end="")
+				# print("dcl = "+str(dcl))
+				# lft = 23 - len(dc.left_only[x])
+				temp += dcl[0:23].ljust(23, '=')
+				Compare.print_red("left temp = "+str(temp))
+				# print(dcl[0:23].ljust(23, ' '), end="")
+				# print('{0:.23}'.format(dcl) + " "*lft, end="")
 				# Compare.print_red("dcl = " + dc.left_only[x])
-				print('{0:.23}'.format(dcl) + " "*lft, end="")
-				# Compare.print_red("dcl = " + dc.left_only[x])
-				# print()
 			else:
-				print(" "*23, end="",flush=True)
-			print("|", end="",flush=True)
+				temp += "&"*23
+				# print(" "*23, end="",flush=True)
+			temp += "|"
+			print("[temp = ]"+temp)
+			# print("|", end="",flush=True)
 
 			# 2nd column
 			if x < sizes[1]:
-				rght = 24 - len(dc.right_only[x])
-				print('{0:.24}'.format(dc.right_only[x]) + " "*rght, end="")
+				temp_right = dc.right_only[x]
+				# rght = 24 - len(dc.right_only[x])
+				if temp.isprintable():
+					print("is printable")
+				else:
+					print("is not printable")
+				temp += temp_right[0:24].ljust(24, ' ')
+				if temp.isprintable():
+					print("is printable")
+				else:
+					print("is not printable")
+				print("[temp = ]"+temp,flush=True)
+				Compare.print_red("right temp = "+temp)
+				# print('{0:.24}'.format(dc.right_only[x]) + " "*rght, end="")
 			else:
-				print(" "*24, end="")
-			print("|", end="",flush=True)
+				temp += "%"*24
+				# print(" "*24, end="")
+			# print("[temp = ]"+temp)
+			temp += "|"
+			# print("|", end="",flush=True)
 
 			# 3rd column
 			if x < sizes[2]:
+				temp_comm = dc.common[x]
 				comp = 28 - len(dc.common[x])
-				print('{0:.28}'.format(dc.common[x]) + " "*comp, end="")
+				temp += temp_comm[0:28].ljust(28, ' ')
+				Compare.print_red("common temp = "+temp)
+				# print('{0:.28}'.format(dc.common[x]) + " "*comp, end="")
 			else:
-				print(" "*28, end="",flush=True)
-			print("|")
-
+				temp += "@"*28
+				# print(" "*28, end="",flush=True)
+			temp += "|"
+			# print("|")
+			print(temp)
+			temp = ""
 		print("+"+"-"*23+"+"+"-"*24+"+"+"-"*28+"+")
 			
 		Compare.print_red("left_only = "+str(len(dc.left_only)))
