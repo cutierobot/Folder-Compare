@@ -151,8 +151,6 @@ class Compare(object):
 	# deals with the subfolders in the current folder. i.e Season 1
 		if len(newdc.common_dirs)>0:
 			for subfolder in newdc.common_dirs:
-				# print("\nsubfolder: "+subfolder)
-				# print("======================\n")
 				print("\n\033[1;33;40m"+subfolder+"\033[0;37;40m")
 				subleft = left+"/"+subfolder
 				subright = right+"/"+subfolder 
@@ -170,12 +168,6 @@ class Compare(object):
 	is entered then there is a reprompt.
 	"""
 	def init_prompt(self):
-		# name of python program
-		# options
-		# - see only things on first directory(quick look)
-		# - see only things on second directory(quick look)
-		# - see things on both first and second directory(quick look)
-		# - go into sub directories
 		# input prompt
 		print("[0] Left Only")
 		print("[1] Right Only")
@@ -185,7 +177,7 @@ class Compare(object):
 		print("[h] Reprint these help messages")
 		print("[exit] Exit this program")
 		
-		usrInput = input("Type number from 0 - 3: ")
+		usrInput = input("Type number from 0 - 4: ")
 		if usrInput == "0":
 			self.left_directory_only()
 		elif usrInput == "1":
@@ -206,6 +198,22 @@ class Compare(object):
 			self.print_red("error please input a number between 0 - 3")
 
 		self.init_prompt()
+
+	# //TODO: [write] function definition "sub_user_input" (99)
+	def sub_user_input(self):
+		# for the stepping into part for when user presses 4
+		count = 1
+		for number in self.dc.common_dirs:
+			print(str(count++) + self.dc.common_dirs[number])
+		self.dc.common_dirs
+		# count now equals total number of valid entries
+		# //TODO: [test] write a test to ensure that only numbers can be entered
+		usrInput = input("Type number from 1 - " + str(count-1) + ": ")
+		# //TODO: if usrInput is all number and valid then print out its table
+		# //TODO: somehow get it to add numbers on each line
+		if usrInput == "q":
+			self.init_prompt()
+
 
 	"""
 	In a nice table format gives all comparason types (left_only, right_only, 
