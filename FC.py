@@ -166,7 +166,7 @@ class Compare(object):
 
 	"""
 	The initial prompt that appears after successful initialisation of program.
-	It launches all the sub_programs of this program. If anything but 0-4, or h
+	It launches all the sub-programs of this program. If anything but 0-4, or h
 	is entered then there is a reprompt.
 	"""
 	def init_prompt(self):
