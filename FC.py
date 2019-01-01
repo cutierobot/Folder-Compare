@@ -12,7 +12,7 @@ import sys
 # dc.report_full_closure()
 
 class Compare(object):
-	"""docstring for Compare"""
+	"""The compare class that is the brains behind this whole program"""
 	def __init__(self, folder1, folder2):
 		self.dc = ""
 		self.folder1 = folder1
