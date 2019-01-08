@@ -11,7 +11,7 @@ What things you need to install the software and how to install them
 python 3 is requirement in order for this to work.
 
 ```
-Give examples
+
 ```
 
 ### Installing
@@ -65,12 +65,9 @@ Add additional notes about how to deploy this on a live system
 * unittest
 * unittest.mock
 
-
 ## Authors
 
 * **M. Somerville** - [cutierobot](https://github.com/cutierobot)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
