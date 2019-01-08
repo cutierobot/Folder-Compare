@@ -25,7 +25,12 @@ class Compare(object):
 	def set_dc(self, dc):
 		self.dc = dc
 
-	# TODO: [write] function definition (99)
+	"""
+	Displays and sets dc, if necessary, for the inital print statments before
+	asking for user input.
+	@param dc dircmp directory compare variable
+	@see filecmp#dircmp
+		{https://docs.python.org/3/library/filecmp.html#filecmp.dircmp}	"""
 	def get_init_details(self, dc):
 		# folder1=sys.argv[1]
 		# folder2 = sys.argv[2]
@@ -193,18 +198,20 @@ class Compare(object):
 		elif usrInput == "exit":
 			exInput = input("Are you sure you want to exit [Y|N]: ")
 			if exInput == "Y":
-				sys.exit(2)
+				sys.exit(0)
 		else:
 			self.print_red("error please input a number between 0 - 3")
 
 		self.init_prompt()
 
 	# //TODO: [write] function definition "sub_user_input" (99)
+	#  //NOTE: python 3 doesn't support integer incrementing (count++) have to do count+=1
 	def sub_user_input(self):
 		# for the stepping into part for when user presses 4
 		count = 1
 		for number in self.dc.common_dirs:
-			print(str(count++) + self.dc.common_dirs[number])
+			print(str(count) + self.dc.common_dirs[number])
+			count += 1
 		self.dc.common_dirs
 		# count now equals total number of valid entries
 		# //TODO: [test] write a test to ensure that only numbers can be entered
